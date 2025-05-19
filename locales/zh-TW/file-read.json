@@ -1,0 +1,52 @@
+{
+    "readFile" : {
+		"label": {
+			"name": "名稱",
+			"filename": "檔案名稱",
+			"path": "路徑",
+			"readMode": "讀取模式",
+            "filepath": "檔案路徑",
+			"flowControl": "流量控制",
+            "outputMode": "輸出模式",
+			"bufferSize": "讀取緩衝區大小",
+			"outputFormat": "輸出形式",
+			"maxLinesOfBatch": "單批最大行數",
+			"linesOfBatch": "行",
+            "encoding": "編碼",
+            "utf8String": "UTF-8 字串",
+            "binaryBuffer": "Binary Buffer",
+			"oomWarning": "警告：當檔案太大可能導致記憶體不足而崩潰，若你要讀取大型檔案，請使用「串流」或「逐行」輸出來避免錯誤。"
+        },
+		"encoding": {
+            "none": "預設值",
+			"setbymsg": "根據訊息的設定",
+            "native": "原生",
+            "unicode": "Unicode",
+            "japanese": "日本",
+            "chinese": "中國",
+            "korean": "韓國",
+            "taiwan": "臺灣/香港",
+            "windows": "Windows 編碼",
+            "iso": "ISO 編碼",
+            "ibm": "IBM 編碼",
+            "mac": "Mac 編碼",
+            "koi8": "KOI8 編碼",
+            "misc": "其它"
+        },
+		"outputMode": {
+			"string": "輸出單個 UTF-8 字串",
+			"line": "逐行輸出字串",
+			"buffer": "輸出單個 Buffer 物件",
+			"bufferStream": "串流輸出 Buffer 物件"
+        },
+		"outputFormat": {
+			"single": "單筆輸出",
+			"batch": "以陣列形式批次輸出"
+		},
+		"flowControl": {
+			"disable": "停用",
+			"enable": "啟用",
+			"tips": "提示：流量控制啟用後，必須使用「Flow Control」來控制輸出流量。"
+		}
+    }
+}

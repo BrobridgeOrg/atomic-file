@@ -1,0 +1,36 @@
+{
+  "name": "@brobridge/atomic-file",
+  "version": "0.0.1",
+  "homepage": "https://github.com/BrobridgeOrg/atomic-file#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrobridgeOrg/atomic-file.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BrobridgeOrg/atomic-file/issues"
+  },
+  "description": "File Operation Module for Brobridge Atomic",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "file",
+    "node-red",
+    "atomic"
+  ],
+  "author": "Fred Chien <fred@brobridge.com>",
+  "license": "APL",
+  "node-red": {
+    "version": ">=2.0.0",
+    "nodes": {
+      "readFile": "file-read.js"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@brobridge/atomic-flowcontrol": "^0.0.1",
+    "@brobridge/atomic-sdk": "^0.0.1"
+  }
+}
