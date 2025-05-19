@@ -16,17 +16,14 @@ module.exports = class Reader extends Transform {
     this._cleanup();
 
     if (this.options.encoding !== 'none') {
-      this._decode = iconv.getDecoder(this.options.encoding);
-      this._encode = iconv.getEncoder(this.options.encoding);
+      this._decode = (data) => {
+        return iconv.decode(data, this.options.encoding);
+      };
     }
   }
 
   _decode(data) {
-    return data;
-  }
-
-  _encode(data) {
-    return data;
+    return data.toString();
   }
 
   _cleanup() {
@@ -52,7 +49,7 @@ module.exports = class Reader extends Transform {
 
   _stringTransform(chunk, encoding, callback) {
 
-    this.buffer += chunk.toString();
+    this.buffer += this._decode(chunk);
 
     if (this.streamMode) {
 
@@ -65,11 +62,11 @@ module.exports = class Reader extends Transform {
 
         // push the line if we are not batching
         if (this.options.linesOfBatch <= 0) {
-          this.push(this.decode(line));
+          this.push(line);
           continue;
         }
 
-        this.lines.push(this.decode(line));
+        this.lines.push(line);
 
         // Batch the lines if we have enough
         if (this.lines.length >= this.options.linesOfBatch) {

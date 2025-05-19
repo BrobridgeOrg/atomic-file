@@ -148,6 +148,7 @@ module.exports = function(RED) {
 
         // Preparing the reader for the output
         let reader = new Reader(outputType, streamMode, {
+          encoding: config.encoding,
           linesOfBatch: (config.outputFormat == 'batch') ? config.maxLinesOfBatch : 0,
         });
 
