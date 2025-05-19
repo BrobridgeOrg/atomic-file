@@ -155,6 +155,9 @@ module.exports = function(RED) {
         // Create a session for the reader
         let session = (config.flowControl == 'enable') ? sm.createSession() : null;
         if (session) {
+          // Bind the session to the read stream
+          session.readStream = readStream;
+
           // Bind to original message for complete detection
           msg.atomicSession = session.id;
         }
@@ -203,11 +206,16 @@ module.exports = function(RED) {
           .on('end', function() {
             outputQueue.close();
           });
-
       });
     });
 
     node.on('close', function() {
+
+      // Release all sessions
+      for (let session of sm.sessions) {
+        session.close();
+        session.readStream.close();
+      }
     });
   }
 

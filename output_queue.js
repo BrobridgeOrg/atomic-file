@@ -11,21 +11,36 @@ module.exports = class OutputQueue extends EventEmitter {
   }
 
   pause() {
+
+    if (this.isClosed) {
+      return;
+    }
+
     this.isPaused = true;
     this.emit('pause');
   }
 
   resume() {
+
+    if (this.isClosed) {
+      return;
+    }
+
     this.isPaused = false;
-    this.emit('resume');
     this.consume();
+    this.emit('resume');
   }
 
   consume() {
+
+    if (this.queue.length === 0) {
+      return;
+    }
+
     for (let i = 0; i < this.rateLimit; i++) {
 
       if (this.queue.length === 0) {
-        continue;
+        break;
       }
 
       const data = this.queue.shift();
@@ -36,7 +51,9 @@ module.exports = class OutputQueue extends EventEmitter {
     this.pause();
 
     if (this.queue.length == 0) {
-      this.emit('empty');
+      if (!this.isClosed) {
+        this.emit('empty');
+      }
     }
   }
 
@@ -62,7 +79,8 @@ module.exports = class OutputQueue extends EventEmitter {
 
   close() {
     this.isClosed = true;
-    this.drain();
-    this.emit('close');
+    if (this.queue.length == 0) {
+      this.emit('close');
+    }
   }
 };
