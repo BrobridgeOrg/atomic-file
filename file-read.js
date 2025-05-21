@@ -216,6 +216,8 @@ module.exports = function(RED) {
         session.close();
         session.readStream.close();
       }
+
+      atomicSDK.releaseNode(node);
     });
   }
 
