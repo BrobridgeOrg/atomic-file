@@ -15,7 +15,7 @@
             "encoding": "編碼",
             "utf8String": "UTF-8 字串",
             "binaryBuffer": "Binary Buffer",
-			"oomWarning": "警告：當檔案太大可能導致記憶體不足而崩潰，若你要讀取大型檔案，請使用「串流」或「逐行」輸出來避免錯誤。"
+			"oomWarning": "建議：當檔案太大可能導致記憶體不足而崩潰，若需要讀取大型檔案，建議使用「串流」或「逐行」輸出來避免錯誤。"
         },
 		"encoding": {
             "none": "預設值",

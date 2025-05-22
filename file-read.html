@@ -170,7 +170,7 @@
     },
     inputs: 1,
     outputs: 1,
-    icon: 'file-out.svg',
+    icon: 'file-in.svg',
     label: function () {
       return this.name || this.filename || 'Read File';
     },
@@ -345,7 +345,9 @@
       </div>
     </div>
 
-    <div class="form-row form-tips" id="node-row-oom-warning" style="margin-top: 10px; max-width: none;"><span data-i18n="readFile.label.oomWarning"></span></div>
+    <div class="form-row">
+      <div class="form-tips" id="node-row-oom-warning" style="margin-top: 10px; min-width: none; max-width: none;"><span data-i18n="readFile.label.oomWarning"></span></div>
+    </div>
 
     <div class="form-row" id="node-row-flowControl" style="margin-left: 30px; margin-top: 10px;" class="hide">
       <div class="form-row">
@@ -356,7 +358,7 @@
         </select>
       </div>
 
-      <div class="form-tips" id="node-row-flowControl-tips" style="max-width: none;"><span data-i18n="readFile.flowControl.tips"></span></div>
+      <div class="form-tips" id="node-row-flowControl-tips" style="min-width: none; max-width: none;"><span data-i18n="readFile.flowControl.tips"></span></div>
     </div>
 
 </script>
