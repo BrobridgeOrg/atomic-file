@@ -23,7 +23,8 @@
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
-      "readFile": "file-read.js"
+      "readFile": "file-read.js",
+      "writeFile": "file-write.js"
     }
   },
   "engines": {

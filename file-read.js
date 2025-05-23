@@ -103,7 +103,10 @@ module.exports = function(RED) {
       var filename = getFilename(msg, config);
       if (!filename) {
         return done(new Error('No filename specified'));
-        return;
+      }
+
+      if (filename && RED.settings.fileWorkingDirectory && !path.isAbsolute(filename)) {
+        filename = path.resolve(path.join(RED.settings.fileWorkingDirectory, filename));
       }
 
       // check if file exists

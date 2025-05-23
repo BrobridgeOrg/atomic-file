@@ -1,0 +1,29 @@
+{
+    "writeFile" : {
+		"label": {
+			"name": "名稱",
+			"filename": "檔案名稱",
+			"path": "路徑",
+            "filepath": "檔案路徑",
+            "encoding": "編碼",
+			"overwrite": "覆寫整個檔案內容",
+			"autoCreateDir": "如果不存在就自動建立資料夾"
+        },
+		"encoding": {
+            "none": "預設值",
+			"setbymsg": "根據訊息的設定",
+            "native": "原生",
+            "unicode": "Unicode",
+            "japanese": "日本",
+            "chinese": "中國",
+            "korean": "韓國",
+            "taiwan": "臺灣/香港",
+            "windows": "Windows 編碼",
+            "iso": "ISO 編碼",
+            "ibm": "IBM 編碼",
+            "mac": "Mac 編碼",
+            "koi8": "KOI8 編碼",
+            "misc": "其它"
+        }
+	}
+}
