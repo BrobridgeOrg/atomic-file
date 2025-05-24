@@ -1,0 +1,53 @@
+{
+    "readFile": {
+        "label": {
+            "name": "Name",
+            "filename": "Filename",
+            "path": "Path",
+            "readMode": "Read Mode",
+            "filepath": "File Path",
+            "flowControl": "Flow Control",
+            "outputMode": "Output Mode",
+            "bufferSize": "Read Buffer Size",
+            "outputFormat": "Output Format",
+            "maxLinesOfBatch": "Max Lines per Batch",
+            "linesOfBatch": "Lines",
+            "encoding": "Encoding",
+            "utf8String": "UTF-8 String",
+            "binaryBuffer": "Binary Buffer",
+            "oomWarning": "Suggestion: Large files may cause memory exhaustion and crashes. If you need to read large files, consider using 'Stream' or 'Line-by-line' output to avoid errors."
+        },
+        "encoding": {
+            "none": "Default",
+            "setbymsg": "From Message",
+            "native": "Native",
+            "unicode": "Unicode",
+            "japanese": "Japanese",
+            "chinese": "Chinese",
+            "korean": "Korean",
+            "taiwan": "Taiwan/HK",
+            "windows": "Windows",
+            "iso": "ISO",
+            "ibm": "IBM",
+            "mac": "Mac",
+            "koi8": "KOI8",
+            "misc": "Other"
+        },
+        "outputMode": {
+            "string": "Output as Single UTF-8 String",
+            "line": "Output Line by Line",
+            "buffer": "Output as Single Buffer Object",
+            "bufferStream": "Stream Output as Buffer Objects"
+        },
+        "outputFormat": {
+            "single": "Single Output",
+            "batch": "Batch Output as Array"
+        },
+        "flowControl": {
+            "disable": "Disabled",
+            "enable": "Enabled",
+            "tips": "Tip: When flow control is enabled, you must use 'Flow Control' to manage the output stream."
+        }
+    }
+}
+

@@ -1,0 +1,31 @@
+{
+    "writeFile": {
+        "label": {
+            "name": "Name",
+            "filename": "Filename",
+            "path": "Path",
+            "filepath": "File Path",
+            "encoding": "Encoding",
+            "overwrite": "Overwrite File",
+            "autoCreateDir": "Auto-Create Folder",
+            "appendNewLine": "Add Newline (\\n) After Write"
+        },
+        "encoding": {
+            "none": "Default",
+            "setbymsg": "From Message",
+            "native": "Native",
+            "unicode": "Unicode",
+            "japanese": "Japanese",
+            "chinese": "Chinese",
+            "korean": "Korean",
+            "taiwan": "Taiwan/HK",
+            "windows": "Windows",
+            "iso": "ISO",
+            "ibm": "IBM",
+            "mac": "Mac",
+            "koi8": "KOI8",
+            "misc": "Other"
+        }
+    }
+}
+
