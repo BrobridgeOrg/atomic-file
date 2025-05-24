@@ -7,7 +7,8 @@
             "filepath": "檔案路徑",
             "encoding": "編碼",
 			"overwrite": "覆寫整個檔案內容",
-			"autoCreateDir": "如果不存在就自動建立資料夾"
+			"autoCreateDir": "如果不存在就自動建立資料夾",
+			"appendNewLine": "在每次寫入的結尾附加換行符號(\\n)"
         },
 		"encoding": {
             "none": "預設值",

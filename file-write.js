@@ -27,6 +27,10 @@ module.exports = function(RED) {
       type: 'boolean',
       default: false
     },
+    appendNewLine: {
+      type: 'boolean',
+      default: false
+    },
     encoding: {
       type: 'string',
       default: 'none'
@@ -72,6 +76,19 @@ module.exports = function(RED) {
     // Current available streams
     var streams = {};
 
+    // Check if the file is opened already
+    var scheduler = setInterval(function() {
+      // Close all streams
+      for (let filename in streams) {
+        let streamObj = streams[filename];
+        if (streamObj.lastUsed + 3000 < Date.now()) {
+          // Close stream if it is not used for 3 seconds
+          streamObj.stream.end();
+          delete streams[filename];
+        }
+      }
+    }, 3000);
+
     node.on('input', function(msg, send, done) {
 
       var filename = getFilename(msg, config);
@@ -107,17 +124,17 @@ module.exports = function(RED) {
         }
 
         // Check if file is opened already
-        let writeStream = streams[filename];
+        let streamObj = streams[filename];
 
         // If file is opened and overwrite is set to true, close the stream
-        if (config.overwrite && writeStream) {
+        if (config.overwrite && streamObj) {
 
           // Close existing stream
-          writeStream.end();
-          writeStream = null;
+          streamObj.stream.end();
+          streamObj = null;
         }
 
-        if (!writeStream) {
+        if (!streamObj) {
 
           // Open file for writing
           writeStream = fs.createWriteStream(filename, {
@@ -125,13 +142,18 @@ module.exports = function(RED) {
             flags: config.overwrite ? 'w' : 'a',
             autoClose: true
           });
-          streams[filename] = writeStream;
+
+          streamObj = streams[filename] = {
+            stream: writeStream,
+          };
 
           writeStream.on('error', function(err) {
             node.error(err, msg);
             done(err);
           });
         }
+
+        streamObj.lastUsed = Date.now();
 
         let data = msg.payload;
 
@@ -142,13 +164,8 @@ module.exports = function(RED) {
           data = data.toString();
         }
 
-        // Newline logic
-        const isLastStringPart = msg.hasOwnProperty("parts") &&
-          msg.parts.type === "string" &&
-          (msg.parts.count === msg.parts.index + 1);
-
-        if (node.appendNewline && !Buffer.isBuffer(data) && !isLastStringPart) {
-          data += os.EOL;
+        if (config.appendNewLine) {
+          data += '\n';
         }
 
         // Encoding logic
@@ -169,12 +186,13 @@ module.exports = function(RED) {
 
     node.on('close', function() {
 
+      clearInterval(scheduler);
+
       // Close all streams
       for (let filename in streams) {
-        if (streams.hasOwnProperty(filename)) {
-          streams[filename].end();
-          delete streams[filename];
-        }
+        let streamObj = streams[filename];
+        streamObj.stream.end();
+        delete streams[filename];
       }
     });
   }

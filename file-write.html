@@ -151,6 +151,10 @@
         value: false,
         required: true
       },
+      appendNewLine: {
+        value: false,
+        required: true
+      },
     },
     inputs: 1,
     outputs: 1,
@@ -261,6 +265,11 @@
     <input type="checkbox" id="node-input-autoCreateDir" style="display: inline-block; width: auto; vertical-align: top;">
     <label for="node-input-autoCreateDir" style="width: 70%"><span data-i18n="writeFile.label.autoCreateDir"></span></label>
   </div>
+
+  <div class="form-row">
+    <label>&nbsp;</label>
+    <input type="checkbox" id="node-input-appendNewLine" style="display: inline-block; width: auto; vertical-align: top;">
+    <label for="node-input-appendNewLine" style="width: 70%"><span data-i18n="writeFile.label.appendNewLine"></span></label>
 
   <div class="form-row form-row-file-encoding">
     <label for="node-input-encoding"><i class="fa fa-flag"></i> <span data-i18n="writeFile.label.encoding"></span></label>
