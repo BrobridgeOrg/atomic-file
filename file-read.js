@@ -160,9 +160,6 @@ module.exports = function(RED) {
         if (session) {
           // Bind the session to the read stream
           session.readStream = readStream;
-
-          // Bind to original message for complete detection
-          msg.atomicSession = session.id;
         }
 
         let outputQueue = new OutputQueue();
