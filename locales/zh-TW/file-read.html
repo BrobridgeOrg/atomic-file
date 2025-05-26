@@ -1,0 +1,70 @@
+<script type="text/html" data-help-name="Read File">
+<p>Read File 節點讀取檔案內容並將檔案內容作為訊息承載輸出。它提供多種輸出模式和檔案編碼選項，能夠高效處理不同類型和大小的檔案。</p>
+
+<h3>設定</h3>
+
+<h4>基本設定</h4>
+<ul>
+    <li><b>名稱</b>：在流程中顯示的節點名稱。</li>
+    <li><b>檔案名稱</b>：要讀取的檔案路徑。可以是靜態路徑、來自 <code>msg.filename</code> 的值，或環境變數。</li>
+    <li><b>編碼</b>：檔案的字元編碼。可從多種編碼中選擇，或使用預設系統編碼。</li>
+    <li><b>緩衝區大小</b>：用於讀取檔案的緩衝區大小（以位元組為單位）。預設為 65,536 位元組（64 KB）。</li>
+</ul>
+
+<h4>輸出模式</h4>
+<ul>
+    <li><b>輸出單個 UTF-8 字串</b>：將整個檔案作為字串在一個訊息中讀取。</li>
+    <li><b>逐行輸出</b>：逐行讀取檔案，並將每行作為單獨的訊息輸出。</li>
+    <li><b>輸出單個 Buffer 物件</b>：將整個檔案作為二進位緩衝區在一個訊息中讀取。</li>
+    <li><b>串流輸出 Buffer 物件</b>：將檔案作為緩衝區塊的串流輸出。</li>
+</ul>
+
+<h4>行輸出選項</h4>
+<p>當使用「逐行輸出」模式時，您可以選擇：</p>
+<ul>
+    <li><b>輸出格式</b>：
+        <ul>
+            <li><b>單筆輸出</b>：將每行作為單獨的訊息輸出。</li>
+            <li><b>批次輸出</b>：一次輸出多行作為陣列。</li>
+        </ul>
+    </li>
+    <li><b>單批最大行數</b>：使用批次輸出時，定義每批中的最大行數。</li>
+</ul>
+
+<h4>流量控制</h4>
+<ul>
+    <li><b>啟用/停用</b>：啟用或停用流量控制以管理大型檔案處理。</li>
+    <li>啟用時，您必須使用「Flow Control」節點來控制讀取速度。</li>
+</ul>
+
+<h3>輸入</h3>
+<dl class="message-properties">
+    <dt>msg.filename <span class="property-type">string</span></dt>
+    <dd>如果檔案名稱類型設為 <code>msg</code>，節點將讀取此屬性中指定的檔案。</dd>
+    <dt>msg.payload.filename <span class="property-type">string</span></dt>
+    <dd>如果未提供 <code>msg.filename</code>，則為檔案名稱的替代位置。</dd>
+    <dt>msg.env <span class="property-type">object</span></dt>
+    <dd>如果檔案名稱類型設為 <code>env</code>，節點將使用此環境變數對應表。</dd>
+</dl>
+
+<h3>輸出</h3>
+<dl class="message-properties">
+    <dt>msg.payload <span class="property-type">string | buffer | array</span></dt>
+    <dd>檔案內容，根據輸出模式選擇進行格式化。</dd>
+    <dt>msg.atomicSession <span class="property-type">string</span></dt>
+    <dd>當啟用流量控制時，包含用於流量控制管理的會話 ID。</dd>
+</dl>
+
+<h3>詳細說明</h3>
+<p>Read File 節點旨在高效處理各種大小的檔案。對於小檔案，您可以使用單一輸出模式一次獲取整個內容。對於較大的檔案，使用逐行或緩衝區串流模式搭配流量控制可以防止記憶體問題。</p>
+
+<h4>警告</h4>
+<p>使用「單一」輸出模式讀取大型檔案時，存在記憶體不足的風險。對於大型檔案，建議使用串流或逐行模式。</p>
+
+<h3>範例</h3>
+<pre>[{"id":"863b5fcfc2c5ca42","type":"inject","z":"c781ad444e961c1f","name":"","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"","payloadType":"date","x":250,"y":280,"wires":[["c5a17985f819468a"]]},
+{"id":"c5a17985f819468a","type":"Read File","z":"c781ad444e961c1f","flowControllable":true,"name":"","filename":"./example.txt","filenameType":"str","encoding":"none","bufferSize":"64","outputMode":"line","outputFormat":"single","maxLinesOfBatch":"100","flowControl":"enable","x":440,"y":280,"wires":[["e29522905f1c6ed2","fc409e84992727bc"]]},
+{"id":"e29522905f1c6ed2","type":"debug","z":"c781ad444e961c1f","name":"Line output","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","statusVal":"","statusType":"auto","x":640,"y":280,"wires":[]},
+{"id":"fc409e84992727bc","type":"Flow Control","z":"c781ad444e961c1f","name":"","targetNodeId":"","selectMode":"auto","selectedNodes":[],"action":"continue","x":640,"y":240,"wires":[]}]</pre>
+<p>此範例展示了使用流量控制逐行讀取檔案。每行都輸出到除錯節點，Flow Control 節點管理讀取節奏。</p>
+</script>

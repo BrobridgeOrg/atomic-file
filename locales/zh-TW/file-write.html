@@ -1,0 +1,84 @@
+<script type="text/html" data-help-name="Write File">
+<p>寫入檔案節點可將資料寫入檔案系統中的檔案。它支援多種檔案編碼，並提供檔案處理、目錄建立和資料格式化的選項。</p>
+
+<h3>設定</h3>
+
+<h4>基本設定</h4>
+<ul>
+    <li><b>名稱</b>：將在流程中顯示的節點名稱。</li>
+    <li><b>檔案名稱</b>：要寫入的檔案路徑。可以是靜態路徑、來自 <code>msg.filename</code> 的值，或環境變數。</li>
+    <li><b>編碼</b>：檔案的字元編碼。可從多種編碼中選擇，或使用預設的系統編碼。</li>
+</ul>
+
+<h4>檔案處理選項</h4>
+<ul>
+    <li><b>覆寫檔案</b>：啟用時，整個檔案內容將被新資料取代。停用時，新資料將附加到現有檔案。</li>
+    <li><b>自動建立資料夾</b>：如果目錄結構不存在，會自動建立。</li>
+    <li><b>寫入後添加換行符號 (\n)</b>：在每次寫入操作後自動附加換行字元。</li>
+</ul>
+
+<h3>輸入</h3>
+<dl class="message-properties">
+    <dt>msg.payload <span class="property-type">string | buffer | object | boolean | number</span></dt>
+    <dd>要寫入檔案的資料。物件將轉換為 JSON 字串，布林值/數字值將轉換為字串。</dd>
+    <dt>msg.filename <span class="property-type">string</span></dt>
+    <dd>如果檔案名稱類型設定為 <code>msg</code>，節點將寫入此屬性中指定的檔案。</dd>
+    <dt>msg.payload.filename <span class="property-type">string</span></dt>
+    <dd>如果未提供 <code>msg.filename</code>，可以使用此位置作為檔案名稱的替代來源。</dd>
+    <dt>msg.env <span class="property-type">object</span></dt>
+    <dd>如果檔案名稱類型設定為 <code>env</code>，節點將使用此環境變數對應表。</dd>
+</dl>
+
+<h3>輸出</h3>
+<dl class="message-properties">
+    <dt>msg <span class="property-type">object</span></dt>
+    <dd>成功執行檔案寫入操作後，原始訊息將不變地傳遞。</dd>
+</dl>
+
+<h3>詳細說明</h3>
+<p>寫入檔案節點提供高效的檔案寫入功能，具有多種設定選項：</p>
+
+<h4>資料類型處理</h4>
+<ul>
+    <li><b>字串/緩衝區</b>：直接寫入檔案</li>
+    <li><b>物件</b>：自動轉換為 JSON 格式</li>
+    <li><b>布林值/數字</b>：轉換為字串表示形式</li>
+</ul>
+
+<h4>檔案模式</h4>
+<ul>
+    <li><b>覆寫模式</b>：取代整個檔案內容（相當於 'w' 旗標）</li>
+    <li><b>附加模式</b>：將新內容添加到現有檔案的末尾（相當於 'a' 旗標）</li>
+</ul>
+
+<h4>串流管理</h4>
+<p>該節點使用智慧串流管理來優化效能：</p>
+<ul>
+    <li>檔案串流在最後一次寫入操作後保持開啟 3 秒鐘</li>
+    <li>對同一檔案的多次寫入會重複使用現有串流</li>
+    <li>當節點停止或超時後，串流會自動關閉</li>
+</ul>
+
+<h4>錯誤處理</h4>
+<p>在以下情況下，節點將產生錯誤：</p>
+<ul>
+    <li>未指定檔案名稱</li>
+    <li>目標目錄不存在（當停用自動建立時）</li>
+    <li>目標路徑指向目錄而非檔案</li>
+    <li>檔案系統權限阻止寫入</li>
+</ul>
+
+<h3>範例</h3>
+<pre>[{"id":"48d6979c28b72153","type":"inject","z":"c781ad444e961c1f","name":"","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"Hello World","payloadType":"str","x":250,"y":780,"wires":[["01fb1b73372b0c58"]]},
+{"id":"01fb1b73372b0c58","type":"Write File","z":"c781ad444e961c1f","name":"","filename":"logs/output.txt","filenameType":"str","overwrite":false,"encoding":"utf8","autoCreateDir":true,"appendNewLine":true,"x":480,"y":780,"wires":[["7a57571edfa5cc70"]]},
+{"id":"7a57571edfa5cc70","type":"debug","z":"c781ad444e961c1f","name":"Write Complete","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":760,"y":800,"wires":[]}]</pre>
+<p>此範例展示了如何將文字資料寫入檔案，並自動建立目錄和附加換行符號。每個訊息負載將作為新行附加到檔案中。</p>
+
+<h3>提示</h3>
+<ul>
+    <li>在記錄場景中使用附加模式，以保留現有內容</li>
+    <li>啟用自動建立資料夾以避免手動設定目錄</li>
+    <li>對於結構化資料，考慮在寫入前使用 JSON 編碼或格式化負載</li>
+    <li>寫入大量資料時，請監控檔案系統空間</li>
+</ul>
+</script>
