@@ -279,4 +279,86 @@
 </script>
 
 <script type="text/html" data-help-name="Write File">
+<p>The Write File node writes data to a file on the file system. It supports various file encodings and provides options for file handling, directory creation, and data formatting.</p>
+
+<h3>Configuration</h3>
+
+<h4>Basic Settings</h4>
+<ul>
+    <li><b>Name</b>: Node name that will be displayed in the flow.</li>
+    <li><b>Filename</b>: Path to the file to be written. Can be a static path, a value from <code>msg.filename</code>, or an environment variable.</li>
+    <li><b>Encoding</b>: Character encoding for the file. Choose from a wide range of encodings or use the default system encoding.</li>
+</ul>
+
+<h4>File Handling Options</h4>
+<ul>
+    <li><b>Overwrite File</b>: When enabled, the entire file content will be replaced with new data. When disabled, new data will be appended to the existing file.</li>
+    <li><b>Auto-Create Folder</b>: Automatically creates the directory structure if it doesn't exist.</li>
+    <li><b>Add Newline (\n) After Write</b>: Automatically appends a newline character after each write operation.</li>
+</ul>
+
+<h3>Inputs</h3>
+<dl class="message-properties">
+    <dt>msg.payload <span class="property-type">string | buffer | object | boolean | number</span></dt>
+    <dd>The data to be written to the file. Objects will be converted to JSON strings, and boolean/number values will be converted to strings.</dd>
+    <dt>msg.filename <span class="property-type">string</span></dt>
+    <dd>If the filename type is set to <code>msg</code>, the node will write to the file specified in this property.</dd>
+    <dt>msg.payload.filename <span class="property-type">string</span></dt>
+    <dd>Alternative location for the filename if <code>msg.filename</code> is not provided.</dd>
+    <dt>msg.env <span class="property-type">object</span></dt>
+    <dd>If the filename type is set to <code>env</code>, the node will use this environment variable map.</dd>
+</dl>
+
+<h3>Outputs</h3>
+<dl class="message-properties">
+    <dt>msg <span class="property-type">object</span></dt>
+    <dd>The original message is passed through unchanged after successful file write operation.</dd>
+</dl>
+
+<h3>Details</h3>
+<p>The Write File node provides efficient file writing capabilities with multiple configuration options:</p>
+
+<h4>Data Type Handling</h4>
+<ul>
+    <li><b>String/Buffer</b>: Written directly to the file</li>
+    <li><b>Objects</b>: Automatically converted to JSON format</li>
+    <li><b>Boolean/Number</b>: Converted to string representation</li>
+</ul>
+
+<h4>File Modes</h4>
+<ul>
+    <li><b>Overwrite Mode</b>: Replaces the entire file content (equivalent to 'w' flag)</li>
+    <li><b>Append Mode</b>: Adds new content to the end of existing file (equivalent to 'a' flag)</li>
+</ul>
+
+<h4>Stream Management</h4>
+<p>The node uses intelligent stream management to optimize performance:</p>
+<ul>
+    <li>File streams are kept open for 3 seconds after the last write operation</li>
+    <li>Multiple writes to the same file reuse the existing stream</li>
+    <li>Streams are automatically closed when the node is stopped or after timeout</li>
+</ul>
+
+<h4>Error Handling</h4>
+<p>The node will generate errors in the following situations:</p>
+<ul>
+    <li>No filename is specified</li>
+    <li>Target directory doesn't exist (when auto-create is disabled)</li>
+    <li>Target path points to a directory instead of a file</li>
+    <li>File system permissions prevent writing</li>
+</ul>
+
+<h3>Example</h3>
+<pre>[{"id":"48d6979c28b72153","type":"inject","z":"c781ad444e961c1f","name":"","props":[{"p":"payload"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"Hello World","payloadType":"str","x":250,"y":780,"wires":[["01fb1b73372b0c58"]]},
+{"id":"01fb1b73372b0c58","type":"Write File","z":"c781ad444e961c1f","name":"","filename":"logs/output.txt","filenameType":"str","overwrite":false,"encoding":"utf8","autoCreateDir":true,"appendNewLine":true,"x":480,"y":780,"wires":[["7a57571edfa5cc70"]]},
+{"id":"7a57571edfa5cc70","type":"debug","z":"c781ad444e961c1f","name":"Write Complete","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","x":760,"y":800,"wires":[]}]</pre>
+<p>This example demonstrates writing text data to a file with automatic directory creation and newline appending. Each message payload will be appended to the file as a new line.</p>
+
+<h3>Tips</h3>
+<ul>
+    <li>Use append mode for logging scenarios where you want to preserve existing content</li>
+    <li>Enable auto-create folder to avoid manual directory setup</li>
+    <li>For structured data, consider using JSON encoding or formatting the payload before writing</li>
+    <li>Monitor file system space when writing large amounts of data</li>
+</ul>
 </script>
