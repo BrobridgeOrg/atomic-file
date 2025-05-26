@@ -1,18 +1,18 @@
 {
-    "writeFile" : {
-		"label": {
-			"name": "名稱",
-			"filename": "檔案名稱",
-			"path": "路徑",
+    "writeFile": {
+        "label": {
+            "name": "名稱",
+            "filename": "檔案名稱",
+            "path": "路徑",
             "filepath": "檔案路徑",
             "encoding": "編碼",
-			"overwrite": "覆寫整個檔案內容",
-			"autoCreateDir": "如果不存在就自動建立資料夾",
-			"appendNewLine": "在每次寫入的結尾附加換行符號(\\n)"
+            "overwrite": "覆寫整個檔案內容",
+            "autoCreateDir": "如果不存在就自動建立資料夾",
+            "appendNewLine": "在每次寫入的結尾附加換行符號(\\n)"
         },
-		"encoding": {
+        "encoding": {
             "none": "預設值",
-			"setbymsg": "根據訊息的設定",
+            "setbymsg": "根據訊息的設定",
             "native": "原生",
             "unicode": "Unicode",
             "japanese": "日本",
@@ -26,5 +26,5 @@
             "koi8": "KOI8 編碼",
             "misc": "其它"
         }
-	}
+    }
 }
