@@ -1,5 +1,5 @@
 <script type="text/javascript">
-  var encodings = [
+  var encodingsForRead = [
     [ "readFile.encoding.native",
       "utf8",
       "ucs2",
@@ -225,7 +225,7 @@
         label: node._("readFile.encoding.setbymsg")
       }).text(label).appendTo(encSel);
 
-      encodings.forEach(function(item) {
+      encodingsForRead.forEach(function(item) {
         if(Array.isArray(item)) {
           var group = $("<optgroup/>", {
             label: node._(item[0])
