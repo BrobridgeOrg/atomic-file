@@ -204,7 +204,7 @@ module.exports = function(RED) {
             outputQueue.push(data);
           })
           .on('end', function() {
-            outputQueue.close();
+            outputQueue.end();
           });
       });
     });

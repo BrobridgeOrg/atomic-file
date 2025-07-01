@@ -4,6 +4,7 @@ module.exports = class OutputQueue extends EventEmitter {
 
   constructor() {
     super();
+    this.isEnd = false;
     this.isClosed = false;
     this.isPaused = false;
     this.rateLimit = 1;
@@ -75,6 +76,19 @@ module.exports = class OutputQueue extends EventEmitter {
     }
 
     this.queue = [];
+  }
+
+  end() {
+
+    if (this.isEnd) {
+      return;
+    }
+
+    this.isEnd = true;
+
+    if (this.isClosed) {
+      return;
+    }
   }
 
   close() {
